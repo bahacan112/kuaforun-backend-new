@@ -1,30 +1,25 @@
 # Kuaforun app Dockerfile
-FROM node:20-alpine
-
+FROM node:20-alpine AS base
 WORKDIR /app
+RUN apk add --no-cache curl && npm i -g pnpm
 
-# Install PNPM and curl for healthchecks
-RUN apk add --no-cache curl && npm i -g pnpm tsx
-
-# Install root dependencies for shared modules (dotenv, drizzle-orm, etc.)
+# Copy monorepo files and install only backend deps
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --prod
-
-# Install backend-specific dependencies (zod v4, @hono/*, pino, etc.)
 COPY apps/kuaforun-backend/package.json apps/kuaforun-backend/pnpm-lock.yaml /app/apps/kuaforun-backend/
-RUN cd apps/kuaforun-backend && pnpm install --frozen-lockfile --prod
+RUN cd apps/kuaforun-backend && pnpm install --frozen-lockfile
 
-# Copy monorepo sources
+# Copy sources
 COPY . .
 
+FROM base AS build
+WORKDIR /app/apps/kuaforun-backend
+RUN pnpm run build
+
+FROM node:20-alpine AS runtime
+WORKDIR /app
+RUN npm i -g pnpm && apk add --no-cache curl
+COPY --from=build /app/apps/kuaforun-backend/dist /app/dist
+COPY --from=base /app/apps/kuaforun-backend/node_modules /app/node_modules
+COPY apps/kuaforun-backend/package.json /app/package.json
 EXPOSE 4000
-
-# Run backend from monorepo root context
-# When build context is repository root, entry file resides under apps/kuaforun-backend
-## IMPORTANT: Re-install backend deps after full source copy to ensure pnpm creates
-## container-relative symlinks (avoids broken Windows absolute paths inside Linux image)
-RUN cd apps/kuaforun-backend \
-  && rm -rf node_modules \
-  && pnpm install --frozen-lockfile --prod
-
-CMD ["npx", "tsx", "apps/kuaforun-backend/src/server.ts"]
+CMD ["node", "dist/server.js"]

@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { prettyJSON } from "hono/pretty-json";
 import { cors } from "hono/cors";
-import { config } from "@shared/config";
 
 import { authRouter } from "./modules/auth/auth.router";
 import { usersRouter } from "./modules/users/users.router";
