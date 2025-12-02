@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import type { Context } from "hono";
 import { db } from "../../db";
 import { and, eq } from "drizzle-orm";
-import { resolveTenantId } from "@shared/config";
+import { resolveTenantId } from "../../shared/config/index";
 import { authMiddleware } from "../../core/middleware/auth.middleware";
 import {
   users,

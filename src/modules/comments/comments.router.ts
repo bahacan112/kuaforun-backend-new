@@ -11,7 +11,7 @@ import {
   users,
 } from "../../db/schema";
 import { eq, desc, and, sql } from "drizzle-orm";
-import { resolveTenantId } from "@shared/config";
+import { resolveTenantId } from "../../shared/config/index";
 import { z } from "zod";
 // Auth middleware kaldırıldı - services/auth mikroservisi kullanılıyor
 // import { authMiddleware, requireRole } from '../../core/middleware/auth'

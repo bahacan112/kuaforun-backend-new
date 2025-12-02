@@ -23,7 +23,7 @@ import {
   authMiddleware,
   optionalAuthMiddleware,
 } from "../../core/middleware/auth.middleware";
-import { resolveTenantId } from "@shared/config";
+import { resolveTenantId } from "../../shared/config/index";
 
 import { AppError } from "../../core/errors";
 import { SerpApiPlacesSearch } from "./serpapi.service";

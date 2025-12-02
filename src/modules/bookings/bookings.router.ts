@@ -11,7 +11,7 @@ import {
 import { validateDto } from "../../dto";
 import { jsonOk, jsonErr } from "../../utils/api-response";
 import { AppError } from "../../core/errors";
-import { resolveTenantId } from "@shared/config";
+import { resolveTenantId } from "../../shared/config/index";
 import {
   authMiddleware,
   optionalAuthMiddleware,

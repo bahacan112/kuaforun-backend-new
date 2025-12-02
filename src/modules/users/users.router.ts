@@ -18,7 +18,7 @@ import {
   authMiddleware,
   optionalAuthMiddleware,
 } from "../../core/middleware/auth.middleware";
-import { resolveTenantId } from "@shared/config";
+import { resolveTenantId } from "../../shared/config/index";
 
 export const usersRouter = new Hono<{
   Variables: {

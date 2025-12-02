@@ -3,7 +3,7 @@ import type { Context } from "hono"
 import { db } from "../../db"
 import { barberShops, barberHours } from "../../db/schema"
 import { eq, and, sql } from "drizzle-orm"
-import { resolveTenantId } from "@shared/config"
+import { resolveTenantId } from "../../shared/config/index"
 
 export const publicShopsAliasRouter = new Hono()
 

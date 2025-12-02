@@ -28,6 +28,8 @@ import {
   getMetrics,
   getContentType,
 } from "./core/observability/metrics";
+import { tenantsRouter } from "./modules/superadmin/tenants.router";
+import { analyticsRouter } from "./modules/superadmin/analytics.router";
 
 const app = new Hono<{
   Variables: {
@@ -144,5 +146,3 @@ app.onError((err, c) => {
 });
 
 export default app;
-import { tenantsRouter } from "./modules/superadmin/tenants.router";
-import { analyticsRouter } from "./modules/superadmin/analytics.router";

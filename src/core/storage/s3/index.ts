@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { config } from '@shared/config'
+import { config } from '../../../shared/config/index'
 
 type UploadParams = {
   key: string
