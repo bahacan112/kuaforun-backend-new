@@ -45,48 +45,10 @@ const app = new Hono<{
 app.use(
   "*",
   cors({
-    origin: (origin) => {
-      // Prefer explicit FRONTEND_URL; fall back to shared config; then dev default
-      const defaultOrigin =
-        process.env.FRONTEND_URL ||
-        config.frontend.url ||
-        "http://localhost:5000";
-      const allowed = new Set([
-        defaultOrigin,
-        "http://web:3000", // internal Docker/Coolify service
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:5000",
-        "http://localhost:5001",
-        "http://localhost:6000",
-        "http://localhost:4500",
-        "http://127.0.0.1:5000",
-        "http://127.0.0.1:6000",
-        "http://127.0.0.1:4500",
-        "https://dev.kuaforun.com",
-        "https://app.kuaforun.com",
-      ]);
-      // When Origin is missing, return default; otherwise allow only known origins
-      if (!origin) return defaultOrigin;
-      return allowed.has(origin) ? origin : defaultOrigin;
-    },
+    origin: (origin) => origin ?? "*",
     allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    // Web client ve gateway tarafından gönderilecek özel header'ları izin listesine ekle
-    allowHeaders: [
-      "Content-Type",
-      "Authorization",
-      "X-User-Id",
-      "X-User-Role",
-      "x-tenant-id",
-      "X-Tenant-Id",
-      "X-CSRF-Token",
-      "X-Prefer-Minimal",
-      "x-request-id",
-      "x-trace-id",
-      "x-correlation-id",
-    ],
-    exposeHeaders: ["content-type"],
+    allowHeaders: ["*"],
+    exposeHeaders: ["*"],
     credentials: true,
   })
 );
