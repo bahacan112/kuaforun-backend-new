@@ -1,0 +1,61 @@
+ *
+ * > [!NOTE]\
+ * > This method also accepts a URL pointing directly to the Authorization
+ * > Server's discovery document, doing so is merely a shorthand for using
+ * > {@link !fetch} and passing the discovered JSON metadata (as
+ * > {@link ServerMetadata}) into the {@link Configuration} constructor. Doing so is
+ * > NOT RECOMMENDED as it disables the {@link ServerMetadata.issuer} validation.
+ *
+ * @param server URL representation of the Authorization Server's Issuer
+ *   Identifier
+ * @param clientId Client Identifier at the Authorization Server
+ * @param metadata Client Metadata, when a string is passed it is a shorthand
+ *   for passing just {@link ClientMetadata.client_secret}
+ * @param clientAuthentication Implementation of the Client's Authentication
+ *   Method at the Authorization Server. Default is {@link ClientSecretPost}
+ *   using the {@link ClientMetadata.client_secret}.
+ * @param options
+ *
+ * @group OpenID Connect 1.0
+ * @group Configuration
+ * @group You are probably looking for this
+ */
+export declare function discovery(server: URL, clientId: string, metadata?: Partial<ClientMetadata> | string, clientAuthentication?: ClientAuth, options?: DiscoveryRequestOptions): Promise<Configuration>;
+export interface DecryptionKey {
+    /**
+     * An asymmetric private CryptoKey. Its algorithm must be compatible with a
+     * supported JWE Key Management Algorithm Identifier
+     */
+    key: CryptoKey;
+    /**
+     * The key's JWE Key Management Algorithm Identifier, this can be used to
+     * limit ECDH and X25519 keys to only a specified ECDH-ES* JWE Key Management
+     * Algorithm (The other (RSA) keys have a JWE Key Management Algorithm
+     * Identifier fully specified by their CryptoKey algorithm).
+     */
+    alg?: string;
+    /**
+     * The key's JWK Key ID.
+     */
+    kid?: string;
+}
+/**
+ * Enables the client to process encrypted ID Tokens, encrypted JWT UserInfo
+ * responses, and encrypted JWT Introspection responses. Multiple private keys
+ * may be provided for the decryption key selection process but only a single
+ * one must match the process.
+ *
+ * The following JWE Key Management Algorithms are supported
+ *
+ * - ECDH-ES
+ * - ECDH-ES+A128KW
+ * - ECDH-ES+A192KW
+ * - ECDH-ES+A256KW
+ * - RSA-OAEP
+ * - RSA-OAEP-256
+ * - RSA-OAEP-384
+ * - RSA-OAEP-512
+ *
+ * > [!NOTE]\
+ * > ECDH algorithms only allow P-256 or X25519 key curve to be used
+ *

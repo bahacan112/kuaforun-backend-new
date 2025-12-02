@@ -1,0 +1,3 @@
+ALTER TABLE "barber_comments" ADD COLUMN "booking_id" uuid;--> statement-breakpoint
+ALTER TABLE "barber_comments" ADD CONSTRAINT "barber_comments_booking_id_bookings_id_fk" FOREIGN KEY ("booking_id") REFERENCES "public"."bookings"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+CREATE UNIQUE INDEX "barber_comment_unique_booking" ON "barber_comments" USING btree ("user_id","booking_id");

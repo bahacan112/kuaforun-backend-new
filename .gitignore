@@ -1,0 +1,58 @@
+# Node dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Build outputs / caches
+.dist/
+dist/
+build/
+out/
+.tmp/
+.cache/
+.eslintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files (keep example)
+.env
+.env.*
+!.env.example
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE configs
+.vscode/
+.idea/
+
+# Local dev data (if used)
+uploads/
+storage/
+data/
+
+# SSL/dev certificates
+*.pem
+*.key
+
+# Drizzle migrations are intentionally NOT ignored (commit drizzle/)
+
+# Allow source code for storage adapters under src/core/storage
+!src/core/storage/
+!src/core/storage/**

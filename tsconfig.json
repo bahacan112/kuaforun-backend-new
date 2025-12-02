@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../../shared/*/src"],
+      "@shared/db/schema": ["../../shared/db/src/schema.ts"],
+      "@shared/utils": ["../../shared/utils/src/index.ts"],
+      "@shared/types": ["../../shared/types/src/index.ts"],
+      "@shared/config": ["../../shared/config/src/index.ts"],
+      "@shared/eventbus": ["../../shared/eventbus/src/index.ts"],
+      "@shared/middleware": ["../../shared/middleware/src/index.ts"],
+      "@factories/src": ["../../factories/src/index.ts"],
+      "@factories/src/index.js": ["../../factories/src/index.ts"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["node_modules", "dist", "drizzle.config.ts"]
+}

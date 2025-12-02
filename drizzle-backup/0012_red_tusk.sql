@@ -1,0 +1,2 @@
+CREATE INDEX "bookings_barber_date_start_idx" ON "bookings" USING btree ("tenant_id","barber_id","booking_date","start_time");--> statement-breakpoint
+CREATE INDEX "bookings_barber_date_range_idx" ON "bookings" USING btree ("tenant_id","barber_id","booking_date","start_time","end_time");

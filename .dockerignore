@@ -1,0 +1,18 @@
+# Reduce build context and avoid copying local dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+.dist/
+dist/
+build/
+
+# Env and logs
+.env
+.env.*
+*.log
+
+# Misc
+.DS_Store
+Thumbs.db
+tmp/

@@ -1,0 +1,81 @@
+    /**
+     * ID Token {@link IDToken.auth_time `auth_time`} claim value will be checked
+     * to be present and conform to this `maxAge` value. Use of this option is
+     * required if you sent a `max_age` parameter in the authorization request.
+     * Default is {@link ClientMetadata.default_max_age } and falls back to not
+     * checking the claim's value beyond it being a number when present.
+     */
+    maxAge?: number;
+    /**
+     * When PKCE is used this is the `code_verifier` that will be sent to the
+     * {@link ServerMetadata.token_endpoint token endpoint}.
+     */
+    pkceCodeVerifier?: string;
+}
+/**
+ * This method validates the authorization response and then executes the
+ * {@link !"Authorization Code Grant"} at the Authorization Server's
+ * {@link ServerMetadata.token_endpoint token endpoint} to obtain an access
+ * token. ID Token and Refresh Token are also optionally issued by the server.
+ *
+ * > [!NOTE]\
+ * > {@link ServerMetadata.token_endpoint URL of the authorization server's token endpoint}
+ * > must be configured.
+ *
+ * @example
+ *
+ * ```ts
+ * let config!: client.Configuration
+ * let getCodeVerifierFromSession!: (...args: any) => string
+ * let getCurrentUrl!: (...args: any) => URL
+ *
+ * let tokens = await client.authorizationCodeGrant(
+ *   config,
+ *   getCurrentUrl(),
+ *   {
+ *     pkceCodeVerifier: getCodeVerifierFromSession(),
+ *   },
+ * )
+ * ```
+ *
+ * @example
+ *
+ * Using an incoming {@link !Request} instance
+ *
+ * ```ts
+ * let config!: client.Configuration
+ * let getCodeVerifierFromSession!: (...args: any) => string
+ * let request!: Request
+ *
+ * let tokens = await client.authorizationCodeGrant(config, request, {
+ *   pkceCodeVerifier: getCodeVerifierFromSession(),
+ * })
+ * ```
+ *
+ * @param currentUrl Current {@link !URL} the Authorization Server provided an
+ *   Authorization Response to or a {@link !Request}, the
+ *   {@link !"Authorization Code Grant"} parameters are extracted from this.
+ * @param checks CSRF Protection checks like PKCE, expected state, or expected
+ *   nonce
+ * @param tokenEndpointParameters Additional parameters that will be sent to the
+ *   token endpoint, typically used for parameters such as `resource`
+ *   ({@link !"Resource Indicators" Resource Indicator}) in cases where multiple
+ *   resource indicators were requested but the authorization server only
+ *   supports issuing an access token with a single audience
+ *
+ * @group OpenID Connect 1.0
+ * @group Grants
+ * @group PKCE
+ * @group You are probably looking for this
+ */
+export declare function authorizationCodeGrant(config: Configuration, currentUrl: URL | Request, checks?: AuthorizationCodeGrantChecks, tokenEndpointParameters?: URLSearchParams | Record<string, string>, options?: AuthorizationCodeGrantOptions): Promise<oauth.TokenEndpointResponse & TokenEndpointResponseHelpers>;
+/**
+ * Performs an OAuth 2.0 {@link !"Refresh Token Grant"} at the Authorization
+ * Server's {@link ServerMetadata.token_endpoint token endpoint} using parameters
+ * from the `parameters` argument, allowing a client to obtain a new access
+ * token using a valid refresh token.
+ *
+ * > [!NOTE]\
+ * > {@link ServerMetadata.token_endpoint URL of the authorization server's token endpoint}
+ * > must be configured.
+ *
